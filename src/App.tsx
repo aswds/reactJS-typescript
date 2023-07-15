@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Error from "./components/Error";
+import List from "./components/List";
+import { Product } from "./components/Product";
+import { useProducts } from "./Hooks/useProducts";
+import { IProduct } from "./models/IProduct";
 
 function App() {
+  const { products, error } = useProducts();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container mx-auto mx-w-2xl pt-5">
+      {error && <Error error={error} />}
+
+      <List
+        items={products}
+        renderItem={(product: IProduct) => (
+          <Product product={product} key={product.id} />
+        )}
+      />
     </div>
   );
 }
-
 export default App;
